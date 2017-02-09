@@ -39,6 +39,27 @@ var makeMarkers = function() {};
 var plotMarkers = function() {};
 
 
+var downloadCrime = $.ajax("https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json")
+
+// a function that does some kind of transformation on the response
+var parseData=function(rawData){ return JSON.parse(rawData)};
+
+// a function that make markers
+var makeMarkers = function(data){
+  return _.map(data, function(x) {
+    console.log(x);
+    return L.marker([x.Lat,x.Lng])
+  })
+};
+
+// plot markers on map
+var plotMarkers=function(marker) {
+  _.each(marker, function(n) {
+    n.addTo(map)
+  });
+}
+
+
 /* =====================
   Define the function removeData so that it clears the markers you've written
   from the map. You'll know you've succeeded when the markers that were
@@ -52,7 +73,11 @@ var plotMarkers = function() {};
   user's input.
 ===================== */
 
-var removeMarkers = function() {};
+var removeMarkers = function(markers) {
+    _.each(markers,function(m){
+      map.removeLayer(m)
+    });
+};
 
 /* =====================
   Optional, stretch goal
@@ -82,9 +107,11 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
  CODE EXECUTED HERE!
 ===================== */
 
-downloadData.done(function(data) {
+downloadCrime.done(function(data) {
   var parsed = parseData(data);
+  console.log("parsed", parsed)
   var markers = makeMarkers(parsed);
+  console.log("markers", markers)
   plotMarkers(markers);
   removeMarkers(markers);
 });

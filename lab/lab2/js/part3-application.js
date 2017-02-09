@@ -26,6 +26,13 @@
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
+// allMyData = {
+//   policeData:null,
+//   bikeData:null
+// }
+// $.ajax("http://policedata.com").done(function(data){allMyData.policeData = data})
+// $.ajax("http://bikedata.com").done(function(data){allMyData.bikeData = data})
+
 var resetMap = function() {
   /* =====================
     Fill out this function definition
